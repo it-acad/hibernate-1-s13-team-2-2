@@ -129,5 +129,4 @@ public class UserTests {
                 Arguments.of("Invalid-invalid", "Invalid-invalid")
         );
     }
-
 }

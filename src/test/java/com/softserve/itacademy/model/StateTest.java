@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class StateTest {
+
     @Test
     void constraintViolationOnEmptyRoleName() {
         State emptyState = new State();
@@ -51,5 +52,4 @@ public class StateTest {
         assertEquals("Name", emptyState.getName());
         assertEquals(List.of(task), emptyState.getTasks());
     }
-
 }

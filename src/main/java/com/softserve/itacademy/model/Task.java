@@ -5,6 +5,7 @@ import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
@@ -21,9 +22,10 @@ public class Task {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @NotBlank(message = "The priority cannot be empty")
-    @Column(nullable = false, unique = true)
-    private String priority;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    @Column(nullable = false)
+    private Priority priority;
 
     @ManyToOne
     @JoinColumn(name = "todo_id")
@@ -52,11 +54,11 @@ public class Task {
         this.name = name;
     }
 
-    public String getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
