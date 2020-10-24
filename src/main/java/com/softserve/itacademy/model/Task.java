@@ -88,5 +88,4 @@ public class Task {
                 ", state=" + state +
                 '}';
     }
-
 }

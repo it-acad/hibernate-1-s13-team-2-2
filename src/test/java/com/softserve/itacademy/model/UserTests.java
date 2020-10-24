@@ -114,11 +114,13 @@ public class UserTests {
         user.setLastName("Valid-Name");
         user.setPassword("qwQW12!@");
         user.setRole(traineeRole);
+        user.setId(12);
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         assertEquals(1, violations.size());
+        assertEquals(12, user.getId());
         assertEquals(errorValue, violations.iterator().next().getInvalidValue());
     }
 

@@ -80,11 +80,13 @@ public class ToDoTests {
         newToDo.setOwner(user);
         newToDo.setTasks(List.of(task));
         newToDo.setCollaborators(List.of(user));
+        newToDo.setId(11);
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<ToDo>> violations = validator.validate(newToDo);
 
         assertEquals(1, violations.size());
+        assertEquals(11, newToDo.getId());
     }
 }

@@ -132,11 +132,13 @@ class TaskTest {
         task.setPriority(null);
         task.setState(state);
         task.setTodo(toDo);
+        task.setId(30);
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<Task>> violations = validator.validate(task);
 
+        assertEquals(30, task.getId());
         assertEquals(1, violations.size());
     }
 

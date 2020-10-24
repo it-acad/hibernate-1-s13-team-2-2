@@ -43,12 +43,14 @@ public class StateTest {
         Task task = new Task();
         emptyState.setName("Name");
         emptyState.setTasks(List.of(task));
+        emptyState.setId(40);
 
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<State>> violations = validator.validate(emptyState);
         assertEquals(0, violations.size());
+        assertEquals(40, emptyState.getId());
         assertEquals("Name", emptyState.getName());
         assertEquals(List.of(task), emptyState.getTasks());
     }
