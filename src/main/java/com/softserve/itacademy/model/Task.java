@@ -13,16 +13,7 @@ import javax.validation.constraints.Size;
 public class Task {
 
     @Id
-    @GeneratedValue(generator = "sequence-generator")
-    @GenericGenerator(
-            name = "sequence-generator",
-            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = {
-                    @Parameter(name = "sequence_name", value = "task_sequence"),
-                    @Parameter(name = "initial_value", value = "1"),
-                    @Parameter(name = "increment_size", value = "1")
-            }
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotBlank(message = "The name cannot be empty")
@@ -34,15 +25,16 @@ public class Task {
     @Column(nullable = false, unique = true)
     private String priority;
 
-    @Column(name = "todo_id")
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id")
+    @ManyToOne
+    @JoinColumn(name = "todo_id")
     private ToDo todo;
 
-    @Column(name = "state_id")
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id")
+    @ManyToOne
+    @JoinColumn(name = "state_id")
     private State state;
+
+    public Task() {
+    }
 
     public long getId() {
         return id;
@@ -94,4 +86,5 @@ public class Task {
                 ", state=" + state +
                 '}';
     }
+
 }

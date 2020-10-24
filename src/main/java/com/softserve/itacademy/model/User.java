@@ -1,8 +1,5 @@
 package com.softserve.itacademy.model;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,45 +11,40 @@ import java.util.List;
 public class User  {
 
     @Id
-    @GeneratedValue(generator = "sequence-generator")
-    @GenericGenerator(
-            name = "sequence-generator",
-            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = {
-                    @Parameter(name = "sequence_name", value = "user_sequence"),
-                    @Parameter(name = "initial_value", value = "10"),
-                    @Parameter(name = "increment_size", value = "1")
-            }
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "The firstName cannot be empty")
-    @Pattern(regexp = "[A-Z][a-z]+")
-    @Column(nullable = false, unique = true)
+    @Pattern(regexp = "[A-Z][a-z]+\\-[A-Z][a-z]+|[A-Z][a-z]+",
+            message = "Must start with a capital letter followed by one or more lowercase letters")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @NotBlank(message = "The lastName cannot be empty")
-    @Pattern(regexp = "[A-Z][a-z]+")
-    @Column(nullable = false, unique = true)
+    @Pattern(regexp = "[A-Z][a-z]+\\-[A-Z][a-z]+|[A-Z][a-z]+",
+            message = "Must start with a capital letter followed by one or more lowercase letters")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @NotBlank(message = "The email cannot be empty")
     @Email
-    @Column(nullable = false, unique = true)
+    @NotBlank
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "The password cannot be empty")
-    @Pattern(regexp = "[A-Za-z0-9_!]+")
-    @Column(nullable = false, unique = true)
+    @Pattern(regexp = "[\\d\\w\\@\\!\\*\\%\\.]+")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "role_id")
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id")
+    @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "owner")
-    private List<ToDo> todos;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
+    private List<ToDo> myTodos;
+
+    @ManyToMany
+    @JoinTable(name = "todo_collaborator",
+            joinColumns = @JoinColumn(name = "collaborator_id"),
+            inverseJoinColumns = @JoinColumn(name = "todo_id"))
+    private List<ToDo> otherTodos;
 
     public User() {
     }
@@ -103,14 +95,6 @@ public class User  {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public List<ToDo> getTodos() {
-        return todos;
-    }
-
-    public void setTodos(List<ToDo> todos) {
-        this.todos = todos;
     }
 
     @Override

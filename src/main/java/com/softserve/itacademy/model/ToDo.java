@@ -1,44 +1,42 @@
 package com.softserve.itacademy.model;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "todos")
 public class ToDo {
-
     @Id
-    @GeneratedValue(generator = "sequence-generator")
-    @GenericGenerator(
-            name = "sequence-generator",
-            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = {
-                    @Parameter(name = "sequence_name", value = "todo_sequence"),
-                    @Parameter(name = "initial_value", value = "1"),
-                    @Parameter(name = "increment_size", value = "1")
-            }
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "The title cannot be empty")
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "The 'title' cannot be empty")
+    @Column(name = "title", nullable = false, unique = true)
     private String title;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "user_id")
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id")
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     private User owner;
 
-    @OneToMany(mappedBy = "todo")
+    @OneToMany(mappedBy = "todo", cascade = CascadeType.REMOVE)
     private List<Task> tasks;
+
+    @ManyToMany
+    @JoinTable(name = "todo_collaborator",
+            joinColumns = @JoinColumn(name = "todo_id"),
+            inverseJoinColumns = @JoinColumn(name = "collaborator_id"))
+    private List<User> collaborators;
+
+    public ToDo() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public long getId() {
         return id;
@@ -80,6 +78,14 @@ public class ToDo {
         this.tasks = tasks;
     }
 
+    public List<User> getCollaborators() {
+        return collaborators;
+    }
+
+    public void setCollaborators(List<User> collaborators) {
+        this.collaborators = collaborators;
+    }
+
     @Override
     public String toString() {
         return "ToDo{" +
@@ -89,4 +95,5 @@ public class ToDo {
                 ", owner=" + owner +
                 '}';
     }
+
 }

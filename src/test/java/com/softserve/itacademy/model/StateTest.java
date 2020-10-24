@@ -13,43 +13,43 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class RoleTests {
-
+public class StateTest {
     @Test
     void constraintViolationOnEmptyRoleName() {
-        Role emptyRole = new Role();
-        emptyRole.setName("");
+        State emptyState = new State();
+        emptyState.setName("");
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Role>> violations = validator.validate(emptyRole);
-        assertEquals(1, violations.size());
+        Set<ConstraintViolation<State>> violations = validator.validate(emptyState);
+        assertEquals(2, violations.size());
     }
 
     @Test
     void roleWithCorrectName() {
-        Role emptyRole = new Role();
-        emptyRole.setName("Correct");
+        State emptyState = new State();
+        emptyState.setName("Correct");
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Role>> violations = validator.validate(emptyRole);
+        Set<ConstraintViolation<State>> violations = validator.validate(emptyState);
         assertEquals(0, violations.size());
     }
 
     @Test
     void roleWithCorrectUser() {
-        Role emptyRole = new Role();
-        User user = new User();
-        emptyRole.setName("Name");
-        emptyRole.setUsers(List.of(user));
+        State emptyState = new State();
+        Task task = new Task();
+        emptyState.setName("Name");
+        emptyState.setTasks(List.of(task));
+
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Role>> violations = validator.validate(emptyRole);
+        Set<ConstraintViolation<State>> violations = validator.validate(emptyState);
         assertEquals(0, violations.size());
-        assertEquals("Name", emptyRole.getName());
-        assertEquals(List.of(user), emptyRole.getUsers());
+        assertEquals("Name", emptyState.getName());
+        assertEquals(List.of(task), emptyState.getTasks());
     }
 
 }

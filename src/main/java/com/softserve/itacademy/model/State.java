@@ -1,8 +1,5 @@
 package com.softserve.itacademy.model;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -13,16 +10,7 @@ import java.util.List;
 public class State {
 
     @Id
-    @GeneratedValue(generator = "sequence-generator")
-    @GenericGenerator(
-            name = "sequence-generator",
-            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = {
-                    @Parameter(name = "sequence_name", value = "state_sequence"),
-                    @Parameter(name = "initial_value", value = "1"),
-                    @Parameter(name = "increment_size", value = "1")
-            }
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotBlank(message = "The stateName cannot be empty")
@@ -62,7 +50,7 @@ public class State {
 
     @Override
     public String toString() {
-        return "State {" +
+        return "State{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

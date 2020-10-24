@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="todolist" target="1.8" />
+      <module name="todolist" target="9" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

@@ -63,6 +63,22 @@ public class UserTests {
         assertEquals(0, violations.size());
     }
 
+    @Test
+    void rightInitializingUser() {
+        User user = new User();
+        user.setEmail("rty5@i.ua");
+        user.setFirstName("Valid-Name");
+        user.setLastName("Valid-Name");
+        user.setPassword("qwQW12!@");
+        user.setRole(traineeRole);
+
+        assertEquals("rty5@i.ua", user.getEmail());
+        assertEquals("Valid-Name", user.getFirstName());
+        assertEquals("Valid-Name", user.getLastName());
+        assertEquals("qwQW12!@", user.getPassword());
+        assertEquals(traineeRole, user.getRole());
+    }
+
     @ParameterizedTest
     @MethodSource("provideInvalidEmailUser")
     void constraintViolationInvalid(String input, String errorValue) {
