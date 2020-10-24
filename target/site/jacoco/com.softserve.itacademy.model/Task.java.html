@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Task.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ToDoList</a> &gt; <a href="index.source.html" class="el_package">com.softserve.itacademy.model</a> &gt; <span class="el_source">Task.java</span></div><h1>Task.java</h1><pre class="source lang-java linenums">package com.softserve.itacademy.model;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+
+@Entity
+@Table(name = &quot;tasks&quot;)
+public class Task {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @NotBlank(message = &quot;The name cannot be empty&quot;)
+    @Size(min = 3, max = 200)
+    @Column(nullable = false, unique = true)
+    private String name;
+
+    @NotBlank(message = &quot;The priority cannot be empty&quot;)
+    @Column(nullable = false, unique = true)
+    private String priority;
+
+    @ManyToOne
+    @JoinColumn(name = &quot;todo_id&quot;)
+    private ToDo todo;
+
+    @ManyToOne
+    @JoinColumn(name = &quot;state_id&quot;)
+    private State state;
+
+<span class="fc" id="L36">    public Task() {</span>
+<span class="fc" id="L37">    }</span>
+
+    public long getId() {
+<span class="nc" id="L40">        return id;</span>
+    }
+
+    public void setId(long id) {
+<span class="nc" id="L44">        this.id = id;</span>
+<span class="nc" id="L45">    }</span>
+
+    public String getName() {
+<span class="nc" id="L48">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="nc" id="L52">        this.name = name;</span>
+<span class="nc" id="L53">    }</span>
+
+    public String getPriority() {
+<span class="nc" id="L56">        return priority;</span>
+    }
+
+    public void setPriority(String priority) {
+<span class="nc" id="L60">        this.priority = priority;</span>
+<span class="nc" id="L61">    }</span>
+
+    public ToDo getTodo() {
+<span class="nc" id="L64">        return todo;</span>
+    }
+
+    public void setTodo(ToDo todo) {
+<span class="nc" id="L68">        this.todo = todo;</span>
+<span class="nc" id="L69">    }</span>
+
+    public State getState() {
+<span class="nc" id="L72">        return state;</span>
+    }
+
+    public void setState(State state) {
+<span class="nc" id="L76">        this.state = state;</span>
+<span class="nc" id="L77">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L81">        return &quot;Task{&quot; +</span>
+                &quot;id=&quot; + id +
+                &quot;, name='&quot; + name + '\'' +
+                &quot;, priority='&quot; + priority + '\'' +
+                &quot;, todo=&quot; + todo +
+                &quot;, state=&quot; + state +
+                '}';
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

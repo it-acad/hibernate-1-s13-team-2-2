@@ -1,0 +1,12 @@
+com/softserve/itacademy/repository/StateRepository.class
+com/softserve/itacademy/model/State.class
+com/softserve/itacademy/repository/RoleRepository.class
+com/softserve/itacademy/model/Task.class
+com/softserve/itacademy/repository/ToDoRepository.class
+com/softserve/itacademy/model/Priority.class
+com/softserve/itacademy/model/Role.class
+com/softserve/itacademy/repository/UserRepository.class
+com/softserve/itacademy/repository/TaskRepository.class
+com/softserve/itacademy/ToDoListApplication.class
+com/softserve/itacademy/model/ToDo.class
+com/softserve/itacademy/model/User.class
